@@ -87,10 +87,10 @@ public class GreedyPlayer implements Player
 //        for (int element: scores) {
 //            System.out.println(element);
 //        }
-        arb.setMove(largest(scores));
+        arb.setMove(largest(scores, board));
     }
     
-    static int largest(int arr[])
+    static int largest(int arr[], Connect4Board board)
     {
         int i;
           
@@ -99,10 +99,33 @@ public class GreedyPlayer implements Player
        
         // Traverse array elements from second and
         // compare every element with current max  
-        for (i = 1; i < arr.length; i++)
-            if (arr[i] > max)
+        for (i = 1; i < arr.length; i++) {
+            if (arr[i] > max) {
                 max = i;
-       
+            }
+        }
+        
+        
+        if(arr[max] <= 0) {
+        	int randomNumber = (int) (Math.random()*(6-0)) + 0;
+        	if (board.isValidMove(randomNumber) ) {
+        		System.out.println(randomNumber);
+        		return randomNumber;
+        	}
+        	else {
+        		 randomNumber = (int) (Math.random()*(6-0)) + 0;
+            	if (board.isValidMove(randomNumber) ) {
+            		System.out.println(randomNumber);
+            		return randomNumber;
+            	}
+        	}
+        }
+        
+        while(!board.isValidMove(max)) {
+        	arr[max] = -100;
+        	max = largest(arr, board);
+        }
+        
         return max;
     }
     

@@ -20,17 +20,19 @@
 //
 //Once you have written this player, try playing against it. Try pitting it against the RandomPlayer. How does it fare? Why do you think that is? 
 
-public class MiniMax implements Player
+public class alphabeta implements Player
 {
     private static java.util.Random rand = new java.util.Random();
     int id;
     int cols;
     int opponent_id;
     int bestCol;
+    int alpha;
+    int beta;
 
     @Override
     public String name() {
-        return "mini max";
+        return "alphabeta";
     }
 
     @Override
@@ -63,11 +65,15 @@ public class MiniMax implements Player
     		for(int i =0; i < cols; i ++) {
     			if(board.isValidMove(i)) {
     				board.move(i, id);
-    				int temp = minimax(board,maxDepth-1,false,arb);
+    				int temp = minimax(board,maxDepth-1, alpha, beta,false,arb);
     				if(temp > bestScore) {
     					bestCol = i;
     				}
-    				bestScore = Math.max(bestScore, temp);
+    				bestScore = Math.max(bestScore, temp);// same till here
+    				alpha = Math.max(alpha, bestScore);
+    				if(alpha >= beta) {
+    					break;
+    				}
     				board.unmove(i, id);
     				
     			}
@@ -109,7 +115,7 @@ public class MiniMax implements Player
     }
     
     
-    public int minimax(Connect4Board board, int depth, boolean isMaxmimzing, Arbitrator arb) {
+    public int minimax(Connect4Board board, int depth,int alpha, int beta, boolean isMaxmimzing, Arbitrator arb) {
     	// just checks if it can
     	if(depth == 0 || board.isFull() || arb.isTimeUp()) {
     		//return score(board);
@@ -122,8 +128,12 @@ public class MiniMax implements Player
     		for(int i =0; i < cols; i ++) {
     			if(board.isValidMove(i)) {
     				board.move(i, id);
-    				int temp = minimax(board,depth-1,false,arb);
-    				bestScore = Math.max(bestScore, temp);
+    				int temp = minimax(board,depth-1, alpha, beta,false,arb);
+    				bestScore = Math.max(bestScore, temp);// same till here
+    				alpha = Math.max(alpha, bestScore);
+    				if(alpha >= beta) {
+    					break;
+    				}
     				board.unmove(i, id);
     				
     			}
@@ -139,7 +149,13 @@ public class MiniMax implements Player
     		for(int i =0; i < cols; i++){
     			if(board.isValidMove(i)) {
     				board.move(i, opponent_id);
-    				bestScore = Math.min(bestScore, minimax(board, depth-1, true, arb));
+    				int temp = minimax(board,depth-1, alpha, beta,false,arb);
+    				bestScore = Math.min(bestScore, temp);// same till here
+    				beta = Math.min(beta, bestScore);
+    				if(alpha >= beta) {
+    					break;
+    				}
+    				
     				board.unmove(i, opponent_id);
     			}
     		}
