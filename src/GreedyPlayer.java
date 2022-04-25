@@ -99,6 +99,11 @@ public class GreedyPlayer implements Player
        
         // Traverse array elements from second and
         // compare every element with current max  
+        for(int z = 0; z < arr.length; z++) {
+    		if(!board.isValidMove(z)) {
+    			arr[z] = -100;
+    		}
+        }
         for (i = 1; i < arr.length; i++) {
             if (arr[i] > max) {
                 max = i;
@@ -106,7 +111,7 @@ public class GreedyPlayer implements Player
         }
         
         
-        if(arr[max] <= 0) {
+        if(arr[max] == 0) {
         	int randomNumber = (int) (Math.random()*(6-0)) + 0;
         	if (board.isValidMove(randomNumber) ) {
         		System.out.println(randomNumber);
@@ -119,8 +124,42 @@ public class GreedyPlayer implements Player
             		return randomNumber;
             	}
         	}
-        	
-        	else {
+        	else if(board.isValidMove(randomNumber) ) {
+       		 randomNumber = (int) (Math.random()*(6-0)) + 0;
+           	if (board.isValidMove(randomNumber) ) {
+           		System.out.println(randomNumber);
+           		return randomNumber;
+           	}
+       	}
+        	else if(board.isValidMove(randomNumber) ) {
+       		 randomNumber = (int) (Math.random()*(6-0)) + 0;
+           	if (board.isValidMove(randomNumber) ) {
+           		System.out.println(randomNumber);
+           		return randomNumber;
+           	}
+       	}
+        	else if(board.isValidMove(randomNumber) ) {
+       		 randomNumber = (int) (Math.random()*(6-0)) + 0;
+           	if (board.isValidMove(randomNumber) ) {
+           		System.out.println(randomNumber);
+           		return randomNumber;
+           	}
+       	}
+        	else if(board.isValidMove(randomNumber) ) {
+       		 randomNumber = (int) (Math.random()*(6-0)) + 0;
+           	if (board.isValidMove(randomNumber) ) {
+           		System.out.println(randomNumber);
+           		return randomNumber;
+           	}
+       	}
+        	else if(board.isValidMove(randomNumber) ) {
+       		 randomNumber = (int) (Math.random()*(6-0)) + 0;
+           	if (board.isValidMove(randomNumber) ) {
+           		System.out.println(randomNumber);
+           		return randomNumber;
+           	}
+       	}
+        	else if(board.isValidMove(randomNumber) ) {
        		 randomNumber = (int) (Math.random()*(6-0)) + 0;
            	if (board.isValidMove(randomNumber) ) {
            		System.out.println(randomNumber);
@@ -128,15 +167,42 @@ public class GreedyPlayer implements Player
            	}
        	}
         	
+        	else {
+        		for(int z = 0; z < arr.length; z++) {
+            		if(!board.isValidMove(z)) {
+            			arr[z] = -100;
+            		}
+                }
+        		
+        		
+        		for(int z = 0; z < arr.length; z++) {
+            		if(arr[z] >=0) {
+            			return z;
+            		}
+                }
+       		 return max;
+       	}
+        	
         	
         }
         
-        while(!board.isValidMove(max)) {
-        	arr[max] = -100;
-        	max = largest(arr, board);
-        }
+
         
-        return max;
+        
+        
+        if(board.isValidMove(max)) {
+        	return max;
+        }
+        // do this if somehow max isnt valid, it just finds the next valid move
+        else {
+        	for(int z = 0; z < arr.length; z++) {
+        		if(board.isValidMove(z)) {
+        			return z;
+        		}
+        	}
+        	
+        	return max;
+        }
     }
     
     
