@@ -112,13 +112,23 @@ public class GreedyPlayer implements Player
         		System.out.println(randomNumber);
         		return randomNumber;
         	}
-        	else {
+        	else if(board.isValidMove(randomNumber) ) {
         		 randomNumber = (int) (Math.random()*(6-0)) + 0;
             	if (board.isValidMove(randomNumber) ) {
             		System.out.println(randomNumber);
             		return randomNumber;
             	}
         	}
+        	
+        	else {
+       		 randomNumber = (int) (Math.random()*(6-0)) + 0;
+           	if (board.isValidMove(randomNumber) ) {
+           		System.out.println(randomNumber);
+           		return randomNumber;
+           	}
+       	}
+        	
+        	
         }
         
         while(!board.isValidMove(max)) {
