@@ -110,7 +110,9 @@ public class GreedyPlayer implements Player
             }
         }
         
-        
+        // if the highest score possible is zero, then try to place token in a random column.
+        // I could have made this code a lot better and pick a random column from a list of legal colums but whatever, 
+        //itll try random column a handful of times and if none of them work itll just play the first legal column
         if(arr[max] == 0) {
         	int randomNumber = (int) (Math.random()*(6-0)) + 0;
         	if (board.isValidMove(randomNumber) ) {
